@@ -43,38 +43,62 @@
             border: none;
         }
     </style>
-    <script>
-        function scrollToViewer() {
-            const viewer = document.getElementById("viewer");
-            viewer.scrollIntoView({ behavior: "smooth" });
-        }
+	<script>
+		function toggleHighlight(event) {
+			const kanjiLink = event.target;
+			kanjiLink.classList.toggle("highlight");
+			saveHighlightState(kanjiLink);
+		}
 
-        function toggleHighlight(event) {
-            const kanjiLink = event.target;
-            kanjiLink.classList.toggle("highlight");
-        }
-    </script>
+		function saveHighlightState(kanjiLink) {
+			// If the link is highlighted, save its state in local storage
+			if (kanjiLink.classList.contains("highlight")) {
+				localStorage.setItem(kanjiLink.textContent, "highlighted");
+			} else {
+				// If the link is not highlighted, remove its state from local storage
+				localStorage.removeItem(kanjiLink.textContent);
+			}
+		}
+
+		function initializeHighlight() {
+			if (typeof(Storage) !== "undefined") {
+				const kanjiLinks = document.querySelectorAll('.kanji-link');
+				kanjiLinks.forEach(link => {
+					link.addEventListener('click', toggleHighlight);
+
+					// Load saved state from local storage
+					if (localStorage.getItem(link.textContent) === "highlighted") {
+						link.classList.add("highlight");
+					}
+				});
+			} else {
+				console.log("Local Storage is not supported by this browser.");
+			}
+		}
+
+		window.onload = initializeHighlight;
+	</script>
 </head>
     <h1>Kanji List</h1>
     <div class="kanji-list">
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/何.txt" target="kanjiFrame">何</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/言.txt" target="kanjiFrame">言</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/行.txt" target="kanjiFrame">行</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/人.txt" target="kanjiFrame">人</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/知.txt" target="kanjiFrame">知</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/事.txt" target="kanjiFrame">事</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/彼.txt" target="kanjiFrame">彼</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/女.txt" target="kanjiFrame">女</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/前.txt" target="kanjiFrame">前</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/話.txt" target="kanjiFrame">話</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/来.txt" target="kanjiFrame">来</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/分.txt" target="kanjiFrame">分</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/者.txt" target="kanjiFrame">者</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/聞.txt" target="kanjiFrame">聞</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/死.txt" target="kanjiFrame">死</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/時.txt" target="kanjiFrame">時</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/殺.txt" target="kanjiFrame">殺</a></div>
-		<div class="kanji-item"><a class="kanji-link highlight" href="kanji_files/中.txt" target="kanjiFrame">中</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/何.txt" target="kanjiFrame">何</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/言.txt" target="kanjiFrame">言</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/行.txt" target="kanjiFrame">行</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/人.txt" target="kanjiFrame">人</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/知.txt" target="kanjiFrame">知</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/事.txt" target="kanjiFrame">事</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/彼.txt" target="kanjiFrame">彼</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/女.txt" target="kanjiFrame">女</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/前.txt" target="kanjiFrame">前</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/話.txt" target="kanjiFrame">話</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/来.txt" target="kanjiFrame">来</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/分.txt" target="kanjiFrame">分</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/者.txt" target="kanjiFrame">者</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/聞.txt" target="kanjiFrame">聞</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/死.txt" target="kanjiFrame">死</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/時.txt" target="kanjiFrame">時</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/殺.txt" target="kanjiFrame">殺</a></div>
+		<div class="kanji-item"><a class="kanji-link" href="kanji_files/中.txt" target="kanjiFrame">中</a></div>
 		<div class="kanji-item"><a class="kanji-link" href="kanji_files/達.txt" target="kanjiFrame">達</a></div>
 		<div class="kanji-item"><a class="kanji-link" href="kanji_files/必.txt" target="kanjiFrame">必</a></div>
 		<div class="kanji-item"><a class="kanji-link" href="kanji_files/要.txt" target="kanjiFrame">要</a></div>
